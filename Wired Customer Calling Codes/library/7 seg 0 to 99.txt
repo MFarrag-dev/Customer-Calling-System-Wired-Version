@@ -1,0 +1,58 @@
+هذا كود رائع وبدون اي مشاكل 
+للتحكم في شاشتين lcd 7 segment 
+للاستخدام ك عداد من رقم 0 الي رقم 99
+اريد تعديل الكود لاضافة زر push button 
+عندما نضغط عليه يرتفع العد بمقدار 1 
+لا تقم بتعديل اي شيئ اخر 
+/*
+
+
+  written by Technical taem @ UGE-ONE.COM
+
+*/
+
+
+
+#include <TM1650.h>
+#include <TM16xxDisplay.h>
+//#include <SoftwareSerial.h>
+#define SHOW_BLANK ' '
+
+
+
+TM1650 module(A5, A4);    // DIN=A5, CLK=A4
+
+TM16xxDisplay display(&module, 3);    // TM16xx object, 8 digits
+//SoftwareSerial ser1(2, 3); // RX, TX
+word va=0;
+char addres,k;
+char numberToShow [3] = { '-', '-', '-'};
+int nCount=0;
+byte val=0;
+
+void setup() {
+ Serial.begin(9600);
+
+ delay(100);
+ module.setDisplayToString(numberToShow); 
+ module.setupDisplay(true, 7);
+
+ Serial.println("Starting");
+
+ delay(1000);
+}
+
+void loop() {
+
+  if(va<100) va++;
+  else va=0;
+     
+ 
+  numberToShow [2]=((va/10)%10)+48; ;
+                       numberToShow [1]=va%10+48;
+                       module.setDisplayToString(numberToShow);
+                       delay(500);
+ 
+
+
+}
